@@ -11,16 +11,25 @@ namespace ControleFinanceiro
 {
 
 
-    public partial class SiteMaster
+    public partial class LancamentoListagem
     {
 
         /// <summary>
-        /// Controle MainContent.
+        /// Controle lblSaldo.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label lblSaldo;
+
+        /// <summary>
+        /// Controle gvLancamentos.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvLancamentos;
     }
 }

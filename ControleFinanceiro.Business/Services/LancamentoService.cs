@@ -1,6 +1,7 @@
 ﻿using ControleFinanceiro.Domain.Models;
 using ControleFinanceiro.Data.Repository;
 using System;
+using System.Collections.Generic;
 
 namespace ControleFinanceiro.Business.Services
 {
@@ -66,6 +67,16 @@ namespace ControleFinanceiro.Business.Services
 
             _repository.Inserir(lancamento);
 
+        }
+
+        public List<Lancamento> BuscarTodos()
+        {
+            return _repository.BuscarTodos();
+        }
+
+        public decimal ObterSaldo()
+        {
+            return _repository.ObterSaldo();
         }
     }
 }

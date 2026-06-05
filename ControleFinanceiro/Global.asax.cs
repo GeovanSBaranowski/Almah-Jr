@@ -14,8 +14,8 @@ namespace ControleFinanceiro
         void Application_Start(object sender, EventArgs e)
         {
             // Código que é executado na inicialização do aplicativo
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
