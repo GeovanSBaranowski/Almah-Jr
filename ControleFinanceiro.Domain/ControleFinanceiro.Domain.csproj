@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\StatusLancamento.cs" />
+    <Compile Include="Enums\TipoLancamento.cs" />
     <Compile Include="Models\Lancamento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

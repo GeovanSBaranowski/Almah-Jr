@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleFinanceiro.Domain.Enums;
+using System;
 
 
 namespace ControleFinanceiro.Domain.Models
@@ -7,7 +8,7 @@ namespace ControleFinanceiro.Domain.Models
     {
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public string Tipo { get; set; }
+        public TipoLancamento Tipo { get; set; }
         public decimal ValorOriginal { get; set; }
         public decimal? PercentualTaxa { get; set; }
         public decimal? PercentualDesconto { get; set; }
@@ -17,6 +18,6 @@ namespace ControleFinanceiro.Domain.Models
         public DateTime? DataPagamento { get; set; }
         public DateTime? DataCancelamento { get; set; }
         public string Competencia { get; set; }
-        public string Status { get; set; }
+        public StatusLancamento Status { get; set; }
     }
 }

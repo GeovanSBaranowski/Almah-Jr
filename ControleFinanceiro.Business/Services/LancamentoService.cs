@@ -2,6 +2,7 @@
 using ControleFinanceiro.Data.Repository;
 using System;
 using System.Collections.Generic;
+using ControleFinanceiro.Domain.Enums;
 
 namespace ControleFinanceiro.Business.Services
 {
@@ -16,12 +17,12 @@ namespace ControleFinanceiro.Business.Services
 
         private decimal CacularValorFinal(Lancamento lancamento)
         {
-            if(lancamento.Tipo == "Credito")
+            if(lancamento.Tipo == TipoLancamento.Credito)
             {
                 return lancamento.ValorOriginal - (lancamento.ValorOriginal * (lancamento.PercentualDesconto ?? 0) / 100);
             }
 
-            else if(lancamento.Tipo == "Debito")
+            else if(lancamento.Tipo == TipoLancamento.Debito)
             {
                 return lancamento.ValorOriginal + (lancamento.ValorOriginal * (lancamento.PercentualTaxa ?? 0) / 100);
             }
@@ -41,17 +42,17 @@ namespace ControleFinanceiro.Business.Services
                 throw new Exception("Valor deve ser maior que zero!");
             }
 
-            if(lancamento.Tipo != "Credito" && lancamento.Tipo != "Debito")
+            if(lancamento.Tipo != TipoLancamento.Credito && lancamento.Tipo != TipoLancamento.Debito)
             {
                 throw new Exception("Tipo de lancamento invalido");
             }
 
-            if(lancamento.Tipo == "Credito" && !lancamento.PercentualDesconto.HasValue)
+            if(lancamento.Tipo == TipoLancamento.Credito && !lancamento.PercentualDesconto.HasValue)
             {
                 throw new Exception("Desconto e obrigatorio para credito");
             }
 
-            if(lancamento.Tipo == "Debito" && !lancamento.PercentualTaxa.HasValue)
+            if(lancamento.Tipo == TipoLancamento.Debito && !lancamento.PercentualTaxa.HasValue)
             {
                 throw new Exception("Taxa e obrigatorio para debito");
             }
@@ -63,7 +64,7 @@ namespace ControleFinanceiro.Business.Services
 
             lancamento.ValorCalculado = CacularValorFinal(lancamento);
             lancamento.DataCriacao = DateTime.Now;
-            lancamento.Status = "Aberto";
+            lancamento.Status = StatusLancamento.Aberto;
 
             _repository.Inserir(lancamento);
 
@@ -77,6 +78,26 @@ namespace ControleFinanceiro.Business.Services
         public decimal ObterSaldo()
         {
             return _repository.ObterSaldo();
+        }
+
+        public void Pagar(int id)
+        {
+            if(id <= 0)
+            {
+                throw new Exception("Lancamento nao existe");
+            }
+
+            _repository.Pagar(id);
+        }
+
+        public void Cancelar(int id)
+        {
+            if (id <= 0)
+            {
+                throw new Exception("Lancamento nao existe");
+            }
+
+            _repository.Cancelar(id);
         }
     }
 }

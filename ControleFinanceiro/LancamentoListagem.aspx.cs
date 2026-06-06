@@ -24,5 +24,22 @@ namespace ControleFinanceiro
 
             lblSaldo.Text = saldo.ToString("C");
         }
+
+        protected void gvLancamentos_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            LancamentoService service = new LancamentoService();
+
+            if(e.CommandName == "Pagar")
+            {
+                service.Pagar(id);
+            }
+            else if(e.CommandName == "Cancelar")
+            {
+                service.Cancelar(id);
+            }
+
+            CarregarLancamentos();
+        }
     }
 }
