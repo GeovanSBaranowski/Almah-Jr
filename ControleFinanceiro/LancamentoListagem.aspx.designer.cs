@@ -24,6 +24,24 @@ namespace ControleFinanceiro
         protected global::System.Web.UI.WebControls.Label lblSaldo;
 
         /// <summary>
+        /// Controle txtCompetenciaExportacao.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCompetenciaExportacao;
+
+        /// <summary>
+        /// Controle btnExportarCsv.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportarCsv;
+
+        /// <summary>
         /// Controle gvLancamentos.
         /// </summary>
         /// <remarks>
@@ -31,5 +49,14 @@ namespace ControleFinanceiro
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvLancamentos;
+
+        /// <summary>
+        /// Controle lblMensagem.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensagem;
     }
 }

@@ -119,6 +119,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="LancamentoCadastro.aspx" />
+    <Content Include="LancamentoEditar.aspx" />
     <Content Include="LancamentoListagem.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -196,6 +197,13 @@
     </Compile>
     <Compile Include="LancamentoCadastro.aspx.designer.cs">
       <DependentUpon>LancamentoCadastro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LancamentoEditar.aspx.cs">
+      <DependentUpon>LancamentoEditar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LancamentoEditar.aspx.designer.cs">
+      <DependentUpon>LancamentoEditar.aspx</DependentUpon>
     </Compile>
     <Compile Include="LancamentoListagem.aspx.cs">
       <DependentUpon>LancamentoListagem.aspx</DependentUpon>

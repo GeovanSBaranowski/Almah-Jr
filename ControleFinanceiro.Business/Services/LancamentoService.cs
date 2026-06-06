@@ -62,6 +62,11 @@ namespace ControleFinanceiro.Business.Services
         {
             Validar(lancamento);
 
+            if (_repository.Duplicado(lancamento.Competencia, lancamento.Descricao, lancamento.Tipo))
+            {
+                throw new Exception("Lancamento ja existe");
+            }
+
             lancamento.ValorCalculado = CacularValorFinal(lancamento);
             lancamento.DataCriacao = DateTime.Now;
             lancamento.Status = StatusLancamento.Aberto;
@@ -73,6 +78,32 @@ namespace ControleFinanceiro.Business.Services
         public List<Lancamento> BuscarTodos()
         {
             return _repository.BuscarTodos();
+        }
+
+        public Lancamento BuscarPorId(int id)
+        {
+            if (id <= 0)
+            {
+                throw new Exception("Lancamento nao existe");
+            }
+
+            Lancamento lancamento = _repository.BuscarPorId(id);
+
+            if (lancamento == null)
+            {
+                throw new Exception("Lancamento nao existe");
+            }
+
+            return lancamento;
+        }
+
+        public List<Lancamento> BuscarPorCompetencia(string competencia)
+        {
+            if(string.IsNullOrWhiteSpace(competencia)){
+                throw new Exception("Informe a competencia");
+            }
+
+            return _repository.BuscarPorCompetencia(competencia.Trim());
         }
 
         public decimal ObterSaldo()
@@ -98,6 +129,32 @@ namespace ControleFinanceiro.Business.Services
             }
 
             _repository.Cancelar(id);
+        }
+
+        public void Atualizar(Lancamento lancamento)
+        {
+            Validar(lancamento);
+
+            Lancamento lancamentoBanco = _repository.BuscarPorId(lancamento.Id);
+
+            if(lancamentoBanco == null)
+            {
+                throw new Exception("Lancamento nao encontrado");
+            }
+
+            if(lancamentoBanco.Status != StatusLancamento.Aberto)
+            {
+                throw new Exception("O titulo precisa estar aberto para ser editado");
+            }
+
+            if(_repository.DuplicadoEditar(lancamento.Id, lancamento.Competencia, lancamento.Descricao, lancamento.Tipo))
+            {
+                throw new Exception("Esse lancamento ja existe");
+            }
+
+            lancamento.ValorCalculado = CacularValorFinal(lancamento);
+
+            _repository.Atualizar(lancamento);
         }
     }
 }

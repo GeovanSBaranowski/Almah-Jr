@@ -9,6 +9,19 @@
         <asp:Label ID="lblSaldo" runat="server" />
     </h3>
 
+    <h3>Exportação</h3>
+
+        Competência:
+        <asp:TextBox ID="txtCompetenciaExportacao" runat="server" placeholder="MM/YYYY" />
+        
+        <asp:Button
+            ID="btnExportarCsv"
+            runat="server"
+            Text="Exportar CSV"
+            OnClick="btnExportarCsv_Click" />
+        
+        <br /><br />
+
     <asp:GridView
         ID="gvLancamentos"
         runat="server"
@@ -40,9 +53,20 @@
                         Text="Cancelar"
                         CommandName="Cancelar"
                         CommandArgument='<%# Eval("Id") %>' />
+
+                    <asp:Button
+                        ID="btnEditar"
+                        runat="server"
+                        Text="Editar"
+                        CommandName="Editar"
+                        CommandArgument='<%# Eval("Id") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
+
     </asp:GridView>
+
+            <asp:Label ID="lblMensagem" runat="server" />
+            <br /><br />
 
 </asp:Content>
