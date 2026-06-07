@@ -1,8 +1,9 @@
-﻿using ControleFinanceiro.Domain.Models;
-using ControleFinanceiro.Data.Repository;
+﻿using ControleFinanceiro.Data.Repository;
+using ControleFinanceiro.Domain.Enums;
+using ControleFinanceiro.Domain.Models;
 using System;
 using System.Collections.Generic;
-using ControleFinanceiro.Domain.Enums;
+using System.Text.RegularExpressions;
 
 namespace ControleFinanceiro.Business.Services
 {
@@ -32,7 +33,13 @@ namespace ControleFinanceiro.Business.Services
 
         private void Validar(Lancamento lancamento)
         {
-            if(string.IsNullOrEmpty(lancamento.Descricao))
+            if (!Regex.IsMatch(lancamento.Competencia, @"^(0[1-9]|1[0-2])\/\d{4}$"))
+            {
+                throw new Exception(
+                    "Competência deve estar no formato MM/YYYY.");
+            }
+
+            if (string.IsNullOrWhiteSpace(lancamento.Descricao))
             {
                 throw new Exception("Descricao e obrigatorio");
             }
@@ -42,21 +49,45 @@ namespace ControleFinanceiro.Business.Services
                 throw new Exception("Valor deve ser maior que zero!");
             }
 
-            if(lancamento.Tipo != TipoLancamento.Credito && lancamento.Tipo != TipoLancamento.Debito)
+            if (!Enum.IsDefined(typeof(TipoLancamento), lancamento.Tipo))
+            {
+                throw new Exception("Tipo de lançamento inválido.");
+            }
+
+            if (lancamento.Tipo != TipoLancamento.Credito && lancamento.Tipo != TipoLancamento.Debito)
             {
                 throw new Exception("Tipo de lancamento invalido");
             }
 
-            if(lancamento.Tipo == TipoLancamento.Credito && !lancamento.PercentualDesconto.HasValue)
-            {
-                throw new Exception("Desconto e obrigatorio para credito");
+            if (lancamento.PercentualDesconto.HasValue &&(lancamento.PercentualDesconto < 0 || lancamento.PercentualDesconto > 100))
+            { 
+                throw new Exception("Desconto deve estar entre 0 e 100.");
             }
 
-            if(lancamento.Tipo == TipoLancamento.Debito && !lancamento.PercentualTaxa.HasValue)
+            if (lancamento.PercentualTaxa.HasValue && (lancamento.PercentualTaxa < 0 || lancamento.PercentualTaxa > 100))
             {
-                throw new Exception("Taxa e obrigatorio para debito");
+                throw new Exception("Taxa deve estar entre 0 e 100.");
+            }
+
+            if (lancamento.Tipo == TipoLancamento.Credito)
+            {
+                if (!lancamento.PercentualDesconto.HasValue)
+                    throw new Exception("Desconto é obrigatório para crédito.");
+
+                if (lancamento.PercentualTaxa.HasValue)
+                    throw new Exception("Taxa não deve ser informada para crédito.");
+            }
+
+            if (lancamento.Tipo == TipoLancamento.Debito)
+            {
+                if (!lancamento.PercentualTaxa.HasValue)
+                    throw new Exception("Taxa é obrigatória para débito.");
+
+                if (lancamento.PercentualDesconto.HasValue)
+                    throw new Exception("Desconto não deve ser informado para débito.");
             }
         }
+        
 
         public void Salvar(Lancamento lancamento)
         {
@@ -99,7 +130,13 @@ namespace ControleFinanceiro.Business.Services
 
         public List<Lancamento> BuscarPorCompetencia(string competencia)
         {
-            if(string.IsNullOrWhiteSpace(competencia)){
+            if (!Regex.IsMatch(competencia, @"^(0[1-9]|1[0-2])\/\d{4}$"))
+            {
+                throw new Exception(
+                    "Competência deve estar no formato MM/YYYY.");
+            }
+
+            if (string.IsNullOrWhiteSpace(competencia)){
                 throw new Exception("Informe a competencia");
             }
 

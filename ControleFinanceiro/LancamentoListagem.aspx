@@ -12,7 +12,7 @@
     <h3>Exportação</h3>
 
         Competência:
-        <asp:TextBox ID="txtCompetenciaExportacao" runat="server" placeholder="MM/YYYY" />
+        <asp:TextBox ID="txtCompetenciaExportacao" runat="server" placeholder="MM/YYYY" onkeyup="formatarCompetencia(this)" MaxLength="7"/>
         
         <asp:Button
             ID="btnExportarCsv"
@@ -68,5 +68,20 @@
 
             <asp:Label ID="lblMensagem" runat="server" />
             <br /><br />
+
+        <script>
+        function formatarCompetencia(campo) {
+
+            var valor = campo.value.replace(/\D/g, '');
+
+            valor = valor.substring(0, 6);
+
+            if (valor.length > 2) {
+                valor = valor.substring(0, 2) + "/" + valor.substring(2);
+            }
+
+            campo.value = valor;
+        }
+        </script>
 
 </asp:Content>

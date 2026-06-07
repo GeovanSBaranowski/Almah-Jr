@@ -44,14 +44,57 @@ namespace ControleFinanceiro
                 lancamento.Id = Convert.ToInt32(hdnId.Value);
                 lancamento.Descricao = txtDescricao.Text.Trim();
 
-                lancamento.Tipo = (TipoLancamento)Enum.Parse(typeof(TipoLancamento), ddlTipo.SelectedValue);
+                if (!Enum.TryParse(ddlTipo.SelectedValue, out TipoLancamento tipo))
+                {
+                    throw new Exception("Selecione um tipo de lançamento.");
+                }
 
-                lancamento.ValorOriginal = decimal.Parse(txtValorOriginal.Text);
+                lancamento.Tipo = tipo;
 
-                lancamento.PercentualTaxa = string.IsNullOrWhiteSpace(txtPercentualTaxa.Text) ? (decimal?)null : decimal.Parse(txtPercentualTaxa.Text);
-                lancamento.PercentualDesconto = string.IsNullOrWhiteSpace(txtPercentualDesconto.Text) ? (decimal?)null : decimal.Parse(txtPercentualDesconto.Text);
+                decimal valorOriginal;
 
-                lancamento.DataLancamento = DateTime.Parse(txtDataLancamento.Text);
+                if (!decimal.TryParse(txtValorOriginal.Text, out valorOriginal))
+                {
+                    throw new Exception("O valor Original precisa ser em números.");
+                }
+
+                lancamento.ValorOriginal = valorOriginal;
+
+                lancamento.PercentualTaxa = null;
+
+                if (!string.IsNullOrWhiteSpace(txtPercentualTaxa.Text))
+                {
+                    decimal taxa;
+
+                    if (!decimal.TryParse(txtPercentualTaxa.Text, out taxa))
+                    {
+                        throw new Exception("O valor da Taxa precisa ser em números.");
+                    }
+
+                    lancamento.PercentualTaxa = taxa;
+                }
+
+                lancamento.PercentualDesconto = null;
+
+                if (!string.IsNullOrWhiteSpace(txtPercentualDesconto.Text))
+                {
+                    decimal desconto;
+
+                    if (!decimal.TryParse(txtPercentualDesconto.Text, out desconto))
+                    {
+                        throw new Exception("O valor do Desconto precisa ser em números.");
+                    }
+
+                    lancamento.PercentualDesconto = desconto;
+                }
+
+                if (!DateTime.TryParse(txtDataLancamento.Text, out DateTime dataLancamento))
+                {
+                    throw new Exception("Informe uma data de lançamento válida.");
+                }
+
+                lancamento.DataLancamento = dataLancamento;
+
                 lancamento.Competencia = txtCompetencia.Text.Trim();
 
                 LancamentoService service = new LancamentoService();

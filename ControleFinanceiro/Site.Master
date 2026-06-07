@@ -12,11 +12,11 @@
 
         <h1>Controle Financeiro</h1>
 
-        <nav>
-            <a runat="server" href="~/Default.aspx">Início</a> |
-            <a runat="server" href="~/LancamentoCadastro.aspx">Cadastrar Lançamento</a>
-            <a runat="server" href="~/LancamentoListagem.aspx">Listar Lançamentos</a>
-        </nav>
+<nav>
+    <a href="/Home.aspx">Início</a> |
+    <a href="/LancamentoCadastro.aspx">Cadastrar Lançamento</a> |
+    <a href="/LancamentoListagem.aspx">Listar Lançamentos</a>
+</nav>
 
         <hr />
 
